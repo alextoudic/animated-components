@@ -1,0 +1,11 @@
+{
+  "presets": [
+    [
+      "babel-preset-bigyouth",
+      {
+        "useBuiltIns": true,
+        "root": "src/"
+      }
+    ]
+  ]
+}

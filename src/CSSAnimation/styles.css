@@ -1,0 +1,115 @@
+.fade-appear {
+  opacity: 0.01;
+}
+
+.fade-appear.fade-appear-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in;
+}
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 400ms ease-in;
+}
+
+.fade-exit {
+  opacity: 1;
+}
+
+.fade-exit.fade-exit-active {
+  opacity: 0.01;
+  transition: opacity 400ms ease-in;
+}
+
+.translate-appear {
+  opacity: 0.01;
+  transform: translateY(20px);
+}
+
+.translate-appear.translate-appear-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 400ms ease-out;
+}
+
+.translate-enter {
+  opacity: 0.01;
+  transform: translateY(20px);
+}
+
+.translate-enter.translate-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 400ms ease-out;
+}
+
+.translate-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.translate-exit.translate-exit-active {
+  opacity: 0.01;
+  transform: translateY(-20px);
+  transition: all 400ms ease-out;
+}
+
+.translate-disappear {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.translate-disappear.translate-disappear-active {
+  opacity: 0.01;
+  transform: translateY(-20px);
+  transition: all 400ms ease-out;
+}
+
+.translate-down-appear {
+  opacity: 0.01;
+  transform: translateY(20px);
+}
+
+.translate-down-appear.translate-down-appear-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 400ms ease-out;
+}
+
+.translate-down-enter {
+  opacity: 0.01;
+  transform: translateY(20px);
+}
+
+.translate-down-enter.translate-down-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 400ms ease-out;
+}
+
+.translate-down-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.translate-down-exit.translate-down-exit-active {
+  opacity: 0.01;
+  transform: translateY(20px);
+  transition: all 400ms ease-out;
+}
+
+.translate-down-disappear {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.translate-down-disappear.translate-down-disappear-active {
+  opacity: 0.01;
+  transform: translateY(20px);
+  transition: all 400ms ease-out;
+}
+

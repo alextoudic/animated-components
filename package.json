@@ -1,0 +1,37 @@
+{
+  "name": "animated-components",
+  "version": "0.0.1-beta",
+  "scripts": {
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "build": "rimraf lib && babel src --out-dir lib && npm run build:dist && cp README.md LICENSE ./lib",
+    "build:dist": "rimraf lib/dist && webpack && NODE_ENV=production webpack -p",
+    "release": "release",
+    "release:next": "release --preid beta --tag next"
+  },
+  "main": "lib/index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@storybook/react": "^3.3.11",
+    "ajv": "^5.0.0",
+    "babel-core": "^6.26.0",
+    "babel-preset-bigyouth": "^0.0.5",
+    "eslint": "^4.9.0",
+    "eslint-config-bigyouth": "^0.0.5",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-jsx-a11y": "^6.0.2",
+    "eslint-plugin-react": "^7.4.0",
+    "html-webpack-plugin": "2.x",
+    "immutable": "^3.8.2",
+    "mo-js": "^0.288.2",
+    "prop-types": "^15.6.0",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0",
+    "release-script": "^1.0.2",
+    "rimraf": "^2.6.2",
+    "webpack": "^3.0.0"
+  },
+  "peerDependencies": {
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  }
+}

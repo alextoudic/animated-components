@@ -1,0 +1,159 @@
+import { Component, Children, cloneElement } from 'react'
+
+const ADD = 'ADD'
+const KEEP = 'KEEP'
+const REMOVE = 'REMOVE'
+
+const ENTER_LEAVE = 'ENTER_LEAVE'
+const LEAVE_ENTER = 'LEAVE_ENTER'
+const BOTH = 'BOTH'
+
+const childrenKeys = x => Children.map(x, ({ key }) => key)
+
+const isEqualArray = (a, b) => {
+  const n = a.length
+
+  if (n !== b.length) return false
+
+  let i = 0
+  let equal = true
+  while ((equal = a[i] === b[i]) && i < n) i += 1
+
+  return equal
+}
+
+export default class AnimatedGroup extends Component {
+  static ENTER_EXIT = '__REPLACE_ENTER_EXIT__'
+  static EXIT_ENTER = '__REPLACE_EXIT_ENTER__'
+  static BOTH = '__REPLACE_BOTH__'
+
+  static defaultProps = {
+    timing: AnimatedGroup.ENTER_EXIT
+  }
+
+  taggedChildren = []
+
+  componentWillReceiveProps({ children }) {
+    const previousKeys = childrenKeys(this.props.children)
+    const nextKeys = childrenKeys(children)
+
+    console.log('previousKeys, nextKeys', previousKeys, nextKeys)
+
+    let lastAdded = -1
+    if (!isEqualArray(previousKeys, nextKeys)) {
+      this.taggedChildren = []
+      Children.forEach(this.props.children, child => {
+        const keyIndex = nextKeys.indexOf(child.key)
+
+        let action
+        if (keyIndex !== -1) {
+          action = KEEP
+
+          const addedChildren = children.slice(lastAdded + 1, keyIndex)
+          addedChildren.forEach(addedChild => {
+            this.taggedChildren.push({
+              action: ADD,
+              key: addedChild.key,
+              child: addedChild,
+            })
+          })
+          lastAdded = keyIndex + addedChildren.length
+        } else {
+          action = REMOVE
+        }
+
+        this.taggedChildren.push({
+          key: child.key,
+          action,
+          child
+        })
+      })
+
+      children.slice(lastAdded + 1).forEach(addedChild => {
+        this.taggedChildren.push({
+          action: ADD,
+          key: addedChild.key,
+          child: addedChild,
+        })
+      })
+    }
+
+    console.table(this.taggedChildren)
+  }
+
+  render() {
+    const { taggedChildren } = this
+
+    return taggedChildren.map(({ action, child }) =>
+      cloneElement(child, { visible: action !== REMOVE })
+    )
+  }
+}
+
+// import React, { Component, cloneElement, Fragment } from 'react'
+
+// export default class ReplaceWraper extends Component {
+//   static ENTER_EXIT = '__REPLACE_ENTER_EXIT__'
+//   static EXIT_ENTER = '__REPLACE_EXIT_ENTER__'
+//   static BOTH = '__REPLACE_BOTH__'
+
+//   static defaultProps = {
+//     timing: ReplaceWraper.EXIT_ENTER,
+//   }
+
+//  = false
+//   previousValue = null
+
+//   state = {
+//     entered: true,
+//     exited: true,
+//   }
+
+//   componentWillReceiveProps({ value }) {
+//     if (value !== this.props.value) {
+//       this.previousValue = this.props.value
+
+//       this = true
+
+//       this.setState({
+//         entered: false,
+//         exited: false,
+//       })
+//     }
+//   }
+
+//   handleEntered = (onEntered) => (el) => {
+//     this.setState({ entered: true })
+//     if (onEntered) onEntered(el)
+//   }
+
+//   handleExited = (onExited) => (el) => {
+//     this.setState({ exited: true })
+//     if (onExited) onExited(el)
+//   }
+
+//   createChild(value, visible) {
+//     const child = this.props.children(value)
+
+//     return cloneElement(child, {
+//       visible,
+//       key: JSON.stringify(value),
+//       onEntered: this.handleEntered(child.props.onEntered),
+//       onExited: this.handleExited(child.props.onExited),
+//     })
+//   }
+
+//   render() {
+//     const { previousValue } = this
+//     const { value, timing } = this.props
+//     const { entered, exited } = this.state
+
+//     return (
+//       <Fragment>
+//         {!exited && this.createChild(previousValue, || (timing === ReplaceWraper.ENTER_EXIT && !entered))}
+//         {this.createChild(value,  && (entered || (timing !== ReplaceWraper.EXIT_ENTER || exited)))}
+//       </Fragment>
+//     )
+//   }
+// }
+
