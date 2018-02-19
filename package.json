@@ -1,6 +1,6 @@
 {
   "name": "animated-components",
-  "version": "0.0.1-beta",
+  "version": "0.0.1-beta.0",
   "scripts": {
     "storybook": "start-storybook -p 9001 -c .storybook",
     "build": "rimraf lib && babel src --out-dir lib && npm run build:dist && cp README.md LICENSE ./lib",
