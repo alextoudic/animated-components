@@ -10,6 +10,10 @@
   },
   "main": "lib/index.js",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:alextoudic/animated-components.git"
+  },
   "devDependencies": {
     "@storybook/react": "^3.3.11",
     "ajv": "^5.0.0",
