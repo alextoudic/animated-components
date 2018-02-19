@@ -74,9 +74,6 @@ export default class AnimatedGroup extends Component {
 
     if (JSON.stringify(prevKeys) === JSON.stringify(nextKeys)) return
 
-    console.log('prevKeys, nextKeys', prevKeys, nextKeys)
-    console.log('mountedAnimation', this.mountedAnimation)
-
     const taggedChildren = [...new Set([...prevKeys, ...nextKeys])].reduce(
       (acc, key) => {
         let action
