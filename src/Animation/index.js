@@ -102,7 +102,7 @@ export default class Animation extends Component {
           this.setState({
             status: Animation.ENTERING,
           }, () => {
-            const timeout = this.props.timeout && typeof this.props.timeout === 'object' ? this.props.timeout.enter : this.props.timeout || 0
+            const timeout = this.props.timeout && typeof this.props.timeout === 'object' ? this.props.timeout.enter : this.props.timeout
             const useTimeout = timeout !== null
     
             if (useTimeout) {
@@ -139,7 +139,7 @@ export default class Animation extends Component {
           this.setState({
             status: Animation.EXITING,
           }, () => {
-            const timeout = this.props.timeout && typeof this.props.timeout === 'object' ? this.props.timeout.exit : this.props.timeout || 0
+            const timeout = this.props.timeout && typeof this.props.timeout === 'object' ? this.props.timeout.exit : this.props.timeout
             const useTimeout = timeout !== null
     
             if (useTimeout) {

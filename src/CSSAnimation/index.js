@@ -99,12 +99,17 @@ export default class extends Component {
   render() {
     const { props } = this
 
-    const delay = props.delay && typeof props.delay === 'object' ? {
-      enter: Math.max(props.delay.enter || MIN_DELAY, MIN_DELAY),
-      exit: Math.max(props.delay.exit || MIN_DELAY, MIN_DELAY),
-    } : {
-      enter: Math.max(props.delay, MIN_DELAY),
-      exit: Math.max(props.delay, MIN_DELAY),
+    let delay
+    if (!props.delay) {
+      delay = MIN_DELAY
+    } else {
+      delay = typeof props.delay === 'object' ? {
+        enter: Math.max(props.delay.enter || MIN_DELAY, MIN_DELAY),
+        exit: Math.max(props.delay.exit || MIN_DELAY, MIN_DELAY),
+      } : {
+        enter: Math.max(props.delay, MIN_DELAY),
+        exit: Math.max(props.delay, MIN_DELAY),
+      }
     }
 
     return (
