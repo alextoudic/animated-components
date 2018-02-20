@@ -92,12 +92,12 @@ export default class Animation extends Component {
       this.setState({
         status: Animation.ENTERING,
       }, () => {
-        const delay = this.props.delay && (this.props.delay.enter || this.props.delay)
+        const delay = typeof this.props.delay === 'object' ? this.props.delay.enter : this.props.delay || 0
 
         this.props.onEnter(findDOMNode(this), isAppearing)
   
         setTimeout(() => {
-          const timeout = this.props.timeout && (this.props.timeout.enter || this.props.timeout)
+          const timeout = typeof this.props.timeout === 'object' ? this.props.timeout.enter : this.props.timeout || 0
           const useTimeout = timeout !== null
   
           if (useTimeout) {
@@ -125,12 +125,12 @@ export default class Animation extends Component {
       this.setState({
         status: Animation.EXITING,
       }, () => {
-        const delay = this.props.delay && (this.props.delay.enter || this.props.delay)
+        const delay = typeof this.props.delay === 'object' ? this.props.delay.exit : this.props.delay || 0
   
         this.props.onExit(findDOMNode(this), isDisappearing)
   
         setTimeout(() => {
-          const timeout = this.props.timeout && (this.props.timeout.exit || this.props.timeout)
+          const timeout = typeof this.props.timeout === 'object' ? this.props.timeout.exit : this.props.timeout || 0
           const useTimeout = timeout !== null
   
           if (useTimeout) {
