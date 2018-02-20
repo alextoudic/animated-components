@@ -9,8 +9,10 @@ const noopCb = done => done()
 
 export default class Animation extends Component {
   static IDLE = '__Animation_IDLE__'
+  static ENTER = '__Animation_ENTER__'
   static ENTERING = '__Animation_ENTERING__'
   static ENTERED = '__Animation_ENTERED__'
+  static EXIT = '__Animation_EXIT__'
   static EXITING = '__Animation_EXITING__'
   static EXITED = '__Animation_EXITED__'
   
@@ -90,23 +92,27 @@ export default class Animation extends Component {
       onEntered()
     } else {
       this.setState({
-        status: Animation.ENTERING,
+        status: Animation.ENTER,
       }, () => {
-        const delay = typeof this.props.delay === 'object' ? this.props.delay.enter : this.props.delay || 0
+        const delay = this.props.delay && typeof this.props.delay === 'object' ? this.props.delay.enter : this.props.delay || 0
 
         this.props.onEnter(findDOMNode(this), isAppearing)
   
         setTimeout(() => {
-          const timeout = typeof this.props.timeout === 'object' ? this.props.timeout.enter : this.props.timeout || 0
-          const useTimeout = timeout !== null
-  
-          if (useTimeout) {
-            setTimeout(onEntered, timeout)
-          }
-  
-          this.props.onEntering(() => {
-            if (!useTimeout) onEntered()
-          }, findDOMNode(this), isAppearing)
+          this.setState({
+            status: Animation.ENTERING,
+          }, () => {
+            const timeout = this.props.timeout && typeof this.props.timeout === 'object' ? this.props.timeout.enter : this.props.timeout || 0
+            const useTimeout = timeout !== null
+    
+            if (useTimeout) {
+              setTimeout(onEntered, timeout)
+            }
+    
+            this.props.onEntering(() => {
+              if (!useTimeout) onEntered()
+            }, findDOMNode(this), isAppearing)
+          })
         }, delay)
       })
     }
@@ -123,23 +129,27 @@ export default class Animation extends Component {
       onExited()
     } else {
       this.setState({
-        status: Animation.EXITING,
+        status: Animation.EXIT,
       }, () => {
-        const delay = typeof this.props.delay === 'object' ? this.props.delay.exit : this.props.delay || 0
+        const delay = this.props.delay && typeof this.props.delay === 'object' ? this.props.delay.exit : this.props.delay || 0
   
         this.props.onExit(findDOMNode(this), isDisappearing)
   
         setTimeout(() => {
-          const timeout = typeof this.props.timeout === 'object' ? this.props.timeout.exit : this.props.timeout || 0
-          const useTimeout = timeout !== null
-  
-          if (useTimeout) {
-            setTimeout(onExited, timeout)
-          }
-  
-          this.props.onExiting(() => {
-            if (!useTimeout) onExited()
-          }, findDOMNode(this), isDisappearing)
+          this.setState({
+            status: Animation.EXITING,
+          }, () => {
+            const timeout = this.props.timeout && typeof this.props.timeout === 'object' ? this.props.timeout.exit : this.props.timeout || 0
+            const useTimeout = timeout !== null
+    
+            if (useTimeout) {
+              setTimeout(onExited, timeout)
+            }
+    
+            this.props.onExiting(() => {
+              if (!useTimeout) onExited()
+            }, findDOMNode(this), isDisappearing)
+          })
         }, delay)
       })
     }
