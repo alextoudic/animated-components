@@ -4,6 +4,8 @@ import Animation from '../Animation'
 
 const noop = () => {}
 
+const MIN_DELAY = 100
+
 export default class extends Component {
   static defaultProps = {
     onEnter: noop,
@@ -97,10 +99,18 @@ export default class extends Component {
   render() {
     const { props } = this
 
+    const delay = props.delay && typeof props.delay === 'object' ? {
+      enter: Math.max(props.delay.enter || MIN_DELAY, MIN_DELAY),
+      exit: Math.max(props.delay.exit || MIN_DELAY, MIN_DELAY),
+    } : {
+      enter: Math.max(props.delay, MIN_DELAY),
+      exit: Math.max(props.delay, MIN_DELAY),
+    }
+
     return (
       <Animation
         {...props}
-        delay={{ exit: props.delay ? Math.max(props.delay.enter || props.delay, 100) : 100 }} // needed to Animation entering
+        delay={delay} // needed to Animation entering
         onEnter={this.handleEnter}
         onEntering={this.handleEntering}
         onEntered={this.handleEntered}
